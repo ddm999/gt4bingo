@@ -12,7 +12,7 @@ button:focus, input:focus {
 /* Colour theme */
 :root {
 	--bg-colour: #FFF;
-	--fg-colour: #000;
+	--fg-colour: #222;
 
 	--nav-shadow-colour: #575757;
 
@@ -118,8 +118,6 @@ body {
 #nav_section h1 {
 	font-size: 4em;
 	font-family: "Roboto", Helvetica, Arial, sans-serif;
-	color: #A59C99;
-	text-shadow: 0px 7px #000;
 	width: 700px;
 	height: 100%;
 	margin-top: 0px;
