@@ -2,21 +2,11 @@
 * {
 	margin: 0;
 	padding: 0;
-	font-family: Minecraftia;
+	font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 button:focus, input:focus {
 	outline:0;
-}
-
-@font-face {
-	font-family: minecraftFont;
-	src: url(MinecrafterAlt.ttf);
-}
-
-@font-face {
-	font-family: Minecraftia;
-	src: url(Minecraftia.ttf);
 }
 
 /* Colour theme */
@@ -127,7 +117,7 @@ body {
 
 #nav_section h1 {
 	font-size: 4em;
-	font-family: minecraftFont;
+	font-family: "Roboto", Helvetica, Arial, sans-serif;
 	color: #A59C99;
 	text-shadow: 0px 7px #000;
 	width: 700px;
@@ -332,9 +322,9 @@ body {
 /** Hide Table mode **/
 #hidden-bingo {
 	display: none;
-	background-image: url("stone-tile.png");
+	/*background-image: url("tile.png");
 	background-repeat: repeat;
-	background-size: 128px 128px;
+	background-size: 128px 128px;*/
 	box-sizing: border-box;
 	padding: 50px;
 }
@@ -480,12 +470,12 @@ body {
 /** Sliders **/
 .slider-holder {
 	box-sizing: border-box;
-	background-image: url("slider-background.png");
+	/*background-image: url("slider-background.png");*/
 	position: relative;
 	-webkit-appearance: none;
 }
 .dark .slider-holder {
-	background-image: url("slider-background-dark.png");
+	/*background-image: url("slider-background-dark.png");*/
 }
 
 .slider,
@@ -722,8 +712,8 @@ select, input[type="text"] {
 }
 
 .dark #hidden-bingo {
-	background-image: url(polished_blackstone_bricks.png);
-	background-size: 128px 128px;
+	/*background-image: url(polished_blackstone_bricks.png);
+	background-size: 128px 128px;*/
 }
 
 .dark .button {

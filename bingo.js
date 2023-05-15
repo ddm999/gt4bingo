@@ -37,15 +37,11 @@ var hoveredSquare;
 //
 // The name is used for display purposes only.
 var VERSIONS = [
-	{ id:"1", name:"v1 [1.12.2]",		goals: bingoList_v1, generator: generator_v1, stable: true },
-	{ id:"2", name:"v2 [1.12.2]",		goals: bingoList_v2, generator: generator_v2, stable: true },
-	{ id:"3", name:"v3 [1.13.2]", 		goals: bingoList_v3, generator: generator_v2, stable: true },
-	{ id:"4", name:"v4 [1.16.5]", 		goals: bingoList_v4, generator: generator_v3, stable: true },
-	{ id:"dev", name:"dev [1.16.5]", 	goals: bingoList_v5, generator: generator_v3, stable: false }, // Dev version
+	{ id:"1", name:"GT4 PAL/NTSC-U/NTSC-J v1",		goals: bingoList_original_v1, generator: generator_v1, stable: false, latest: true },
 ];
 
 // This is the newest stable version that users not specifying a version will get
-var LATEST_VERSION = "4";
+var LATEST_VERSION = "1";
 
 const SQUARE_COUNT = 25;
 const NODE_TYPE_TEXT = 3;
@@ -598,7 +594,7 @@ function updateVersion()
 	$("#version_selection").val(VERSION.id);
 	$("#versions-toggle-button").html(VERSION.name);
 	$(".versionText").html(VERSION.name);
-	if (VERSION.id != LATEST_VERSION && VERSION.stable)
+	if (!VERSION.latest)
 	{
 		$("#version_notice").css("display", "block");
 	} else {
