@@ -1,112 +1,103 @@
-// Was generator_v3 in mcbingo
+// WIP generator
 
-var generator_v1 = function(layout, difficulty, bingoList)
+var generator_v1 = function(maxLicence, difficulty, bingoList, aspecpts)
 {
-	var amountOfVeryHard;
-	var amountOfHard;
+	var amountOfExtremelyLong;
+	var amountOfVeryLong;
+	var amountOfLong;
 	var amountOfMedium;
-	var amountOfEasy;
+	var amountOfShort;
 
 	var currentSheet = [];
 	var sheetLayout = [];
 
-	if (layout == "set")
+	sheetLayout = [ 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0];
+
+	switch(difficulty)
 	{
-		sheetLayout = [ 1, 2, 0, 2, 1,
-						2, 0, 1, 0, 2,
-						0, 1, 3, 1, 0,
-						2, 0, 1, 0, 2,
-						1, 2, 0, 2, 1];
+		case 2:
+			amountOfExtremelyLong = 0;
+			amountOfVeryLong = 0;
+			amountOfLong = 0;
+			amountOfMedium = getRandomInt(4, 9);
+			amountOfShort = 25 - (amountOfMedium + getRandomInt(4, 9));
+			break;
+
+		case 3:
+			amountOfExtremelyLong = 0;
+			amountOfVeryLong = 0;
+			amountOfLong = getRandomInt(2, 6);
+			amountOfShort = getRandomInt(3, 9);
+			amountOfMedium = 25 - (amountOfVeryLong + amountOfLong + amountOfShort + getRandomInt(1, 4));
+			break;
+
+		case 4:
+			amountOfExtremelyLong = 0;
+			amountOfVeryLong = getRandomInt(1, 3);
+			amountOfLong = getRandomInt(10, 14);
+			amountOfShort = getRandomInt(2, 6);
+			amountOfMedium = 25 - (amountOfVeryLong + amountOfLong + amountOfShort);
+			break;
+
+		case 5:
+			amountOfExtremelyLong = getRandomInt(1, 3);
+			amountOfVeryLong = getRandomInt(4, 12);
+			amountOfMedium = getRandomInt(2, 6);
+			amountOfLong = 25 - (amountOfExtremelyLong + amountOfVeryLong + amountOfMedium);
+			amountOfShort = 0;
+			break;
+
+		default:
+			amountOfExtremelyLong = 0;
+			amountOfVeryLong = 0;
+			amountOfLong = 0;
+			amountOfMedium = 0;
+			amountOfShort = getRandomInt(5, 14);
 	}
-	else if (layout == "random")
+
+	function distributeDifficulty(amountOfDifficulty, difficulty)
 	{
-		sheetLayout = [ 0, 0, 0, 0, 0,
-						0, 0, 0, 0, 0,
-						0, 0, 0, 0, 0,
-						0, 0, 0, 0, 0,
-						0, 0, 0, 0, 0];
-
-		switch(difficulty)
+		for (var i = 0; i < amountOfDifficulty; i++)
 		{
-			// Easy with some Very Easy
-			case 2:
-				amountOfVeryHard = 0;
-				amountOfHard = 0;
-				amountOfMedium = 0;
-				amountOfEasy = getRandomInt(15, 19);
-				break;
+			var cont = true;
+			var failSafe = 0;
 
-			// Medium with some Easy
-			case 3:
-				amountOfVeryHard = 0;
-				amountOfHard = 0;
-				amountOfMedium = getRandomInt(15, 19);
-				amountOfEasy = 25 - amountOfMedium;
-				break;
-
-			// Hard with some Medium
-			case 4:
-				amountOfVeryHard = 0;
-				amountOfHard = getRandomInt(15, 19);
-				amountOfMedium = 25 - amountOfHard;
-				amountOfEasy = 25 - amountOfHard - amountOfMedium;
-				break;
-
-			// Very Hard with some Hard
-			case 5:
-				amountOfVeryHard = getRandomInt(15, 19);
-				amountOfHard = 25 - amountOfVeryHard;
-				amountOfMedium = 25 - amountOfHard - amountOfVeryHard;
-				amountOfEasy = 25 - amountOfHard - amountOfMedium- amountOfVeryHard;
-				break;
-
-			// Very Easy
-			default:
-				amountOfVeryHard = 0;
-				amountOfHard = 0;
-				amountOfMedium = 0;
-				amountOfEasy = 0;
-		}
-
-		function distributeDifficulty(amountOfDifficulty, difficulty)
-		{
-			for (var i = 0; i < amountOfDifficulty; i++)
+			do
 			{
-				var cont = true;
-				var failSafe = 0;
+				cont = true;
+				failSafe++;
 
-				do
+				var rng = Math.floor((Math.random() * 25));
+
+				if (sheetLayout[rng] == 0)
 				{
-					cont = true;
-					failSafe++;
-
-					var rng = Math.floor((Math.random() * 25));
-
-					if (sheetLayout[rng] == 0)
+					sheetLayout[rng] = difficulty;
+				}
+				else
+				{
+					cont = false;
+					if (failSafe >= 500)
 					{
-						sheetLayout[rng] = difficulty;
-					}
-					else
-					{
-						cont = false;
-						if (failSafe >= 500)
-						{
-							break;
-						}
+						break;
 					}
 				}
-				while (cont == false);
 			}
+			while (cont == false);
 		}
-
-		distributeDifficulty(amountOfVeryHard, 4);
-		distributeDifficulty(amountOfHard, 3);
-		distributeDifficulty(amountOfMedium, 2);
-		distributeDifficulty(amountOfEasy, 1);
 	}
 
+	distributeDifficulty(amountOfExtremelyLong, 5);
+	distributeDifficulty(amountOfVeryLong, 4);
+	distributeDifficulty(amountOfLong, 3);
+	distributeDifficulty(amountOfMedium, 2);
+	distributeDifficulty(amountOfShort, 1);
+
 	// Shuffle the sheet pre generation to allow for accurate line checks. 
-	// Sheet must be shuffled to avoid hard to place goals being more likely to be top left than bottom right
+	// Sheet must be shuffled to avoid Long to place goals being more likely to be top left than bottom right
 	var indexes = Array.from(Array(25).keys());
 	shuffle(indexes);
 
@@ -153,6 +144,14 @@ var generator_v1 = function(layout, difficulty, bingoList)
 			{
 				// Get a new goal
 				console.log(goalCandidate.name + " already on the board");
+				continue GoalGen;
+			}
+
+			// Check if the licence condition is met
+			if (Math.max(LICENCES.findIndex((element) => element == goalCandidate.licence),0) > maxLicence)
+			{
+				// If it's above the max licence setting, get a new goal
+				console.log(goalCandidate.name + " is above maximum licence of " + LICENCES[maxLicence])
 				continue GoalGen;
 			}
 
@@ -255,10 +254,14 @@ var generator_v1 = function(layout, difficulty, bingoList)
 		while (true);
 
 		// We successfully picked a goal, add its tags to tagCount
-		for (const tag of goalCandidate.tags)
+		// ... unless it doesn't have tags
+		if (goalCandidate.tags != null)
 		{
-			tagCount[tag.name]++;
-			//console.log(tagCount);
+			for (const tag of goalCandidate.tags)
+			{
+				tagCount[tag.name]++;
+				//console.log(tagCount);
+			}
 		}
 		// Add its antisynergys to the set of antisynergys
 		if (typeof goalCandidate.antisynergy !== 'undefined')
@@ -280,11 +283,21 @@ var generator_v1 = function(layout, difficulty, bingoList)
 		var goal = JSON.parse(JSON.stringify(goalCandidate)); // Clone object
 
 		// Replace random ranges in goal name
-		goal.generatedName = goal.name.replace(/\((\d+)-(\d+)\)/g, function(match, n1, n2, offset, input)
+		/*goal.generatedName = goal.name.replace(/\((\d+)-(\d+)\)/g, function(match, n1, n2, offset, input)
 		{
 			n1 = parseInt(n1);
 			n2 = parseInt(n2);
 			return getRandomInt(n1, n2);
+		});*/
+
+		// Replace ASPECPTS with set A-Spec Points requirement
+		goal.generatedName = goal.name.replace(" ASPECPTS", function(match, n1, n2, offset, input)
+		{
+			if (ASPECPTS > 0)
+			{
+				return ", earning at least "+ASPECPTS+" A-Spec Points";
+			}
+			return "";
 		});
 
 		// Add the sheet to the goal

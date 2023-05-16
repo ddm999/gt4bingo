@@ -1,11 +1,13 @@
 
 var DIFFICULTY;
 var SEED;
-var LAYOUT;
 var HIDDEN;
 var STREAMER_MODE;
 var VERSION;
-var DIFFICULTYTEXT = [ "Very Easy", "Easy", "Medium", "Hard", "Very Hard"];
+var LICENCE;
+var ASPECPTS;
+var DIFFICULTYTEXT = [ "Very Short", "Short", "Medium", "Long", "Very Long"];
+var LICENCES = ["-", "B", "A", "IB", "IA", "S"];
 
 const DEFAULT_SQUARE_CLASS_NAME = "greysquare";
 const ALL_COLOURS = [DEFAULT_SQUARE_CLASS_NAME, "bluesquare", "greensquare", "redsquare", "yellowsquare", "cyansquare", "brownsquare"];
@@ -19,6 +21,7 @@ var COLOURCOUNTTEXT = [ "Green only", "Blue, Green, Red", "6 Colours"];
 var COLOURSYMBOLS = false;
 var DARK_MODE = false;
 const NEVER_HIGHLIGHT_CLASS_NAME = "greensquare";
+const NOTIMPLEMENTED_HIGHLIGHT_CLASS_NAME = "brownsquare";
 
 var hoveredSquare;
 
@@ -37,7 +40,7 @@ var hoveredSquare;
 //
 // The name is used for display purposes only.
 var VERSIONS = [
-	{ id:"1", name:"GT4 PAL/NTSC-U/NTSC-J v1",		goals: bingoList_original_v1, generator: generator_v1, stable: false, latest: true },
+	{ id:"1", name:"GT4 NTSC-U",		goals: bingoList_us_v1, generator: generator_v1, stable: false, latest: true },
 ];
 
 // This is the newest stable version that users not specifying a version will get
@@ -47,6 +50,7 @@ const SQUARE_COUNT = 25;
 const NODE_TYPE_TEXT = 3;
 const TOOLTIP_TEXT_ATTR_NAME = "data-tooltiptext";
 const TOOLTIP_IMAGE_ATTR_NAME = "data-tooltipimg";
+const LICENCE_IMAGE_ATTR_NAME = "data-licenceimg";
 const COLOUR_COUNT_SETTING_NAME = "bingoColourCount";
 const COLOUR_SYMBOLS_SETTING_NAME = "bingoColourSymbols";
 const COLOUR_THEME_SETTING_NAME = "bingoColourTheme";
@@ -83,7 +87,7 @@ $(document).click(function(event) {
 $(document).ready(function()
 {
 	// Set the background to a random image
-	document.body.className += "bg" + (Math.floor(Math.random() * 10) + 1);
+	//document.body.className += "bg" + (Math.floor(Math.random() * 10) + 1);
 
 	// By default hide the tooltips
 	$(".tooltip").hide();
@@ -261,12 +265,24 @@ function getSettingsFromURL()
 		HIDDEN = settings[1] == "1";
 		STREAMER_MODE = settings[2] == "1";
 		var selectedVersion = settings[3];
+		LICENCE = parseInt(settings[4]);
+		ASPECPTS = parseInt(settings[5]);
 	}
 
 	// Set default values
 	if (isNaN(DIFFICULTY) || DIFFICULTY < 1 || DIFFICULTY > 5)
 	{
 		DIFFICULTY = 3;
+	}
+
+	if (isNaN(LICENCE) || LICENCE < 0 || LICENCE > 5)
+	{
+		LICENCE = 2;
+	}
+
+	if (isNaN(ASPECPTS) || ASPECPTS < 0 || ASPECPTS > 200)
+	{
+		ASPECPTS = 0;
 	}
 
 	VERSION = getVersion(selectedVersion);
@@ -278,20 +294,6 @@ function getSettingsFromURL()
 	if (!SEED)
 	{
 		newSeed(false);
-	}
-
-	// Grab the layout setting from the URL
-	LAYOUT = gup( 'layout' );
-
-	if (LAYOUT == "set")
-	{
-		// Set the layout settings' text
-		// document.getElementById("whatlayout").innerHTML="Set Layout";
-	}
-	else
-	{
-		LAYOUT = "random";
-		// document.getElementById("whatlayout").innerHTML="Random Layout";
 	}
 
 	updateHidden();
@@ -356,7 +358,7 @@ function generateNewSheet()
 		setSquareColor(square, DEFAULT_SQUARE_CLASS_NAME);
 	});
 
-	var result = VERSION.generator(LAYOUT, DIFFICULTY, VERSION.goals);
+	var result = VERSION.generator(LICENCE, DIFFICULTY, VERSION.goals, ASPECPTS);
 
 	forEachSquare((i, square) => {
 		var goal = result[i];
@@ -366,10 +368,15 @@ function generateNewSheet()
 
 		square.attr(TOOLTIP_TEXT_ATTR_NAME, goal.tooltiptext || "");
 		square.attr(TOOLTIP_IMAGE_ATTR_NAME, goal.tooltipimg || "");
+		square.attr(LICENCE_IMAGE_ATTR_NAME, goal.licence || "-");
 
 		if (goal.tags && goal.tags.findIndex(t => t.name == "Never") != -1)
 		{
 			setSquareColor(square, NEVER_HIGHLIGHT_CLASS_NAME);
+		}
+		if (goal.name.includes("NOT YET IMPLEMENTED"))
+		{
+			setSquareColor(square, NOTIMPLEMENTED_HIGHLIGHT_CLASS_NAME);
 		}
 	});
 }
@@ -394,31 +401,6 @@ function newSeed(remakeSheet)
 	{
 		generateNewSheet();
 	}
-}
-
-// Change the layout
-function changeLayout()
-{
-	// Change the layout based on the current layout
-	if (LAYOUT == "set")
-	{
-		LAYOUT = "random";
-
-		// Update the button's text
-		document.getElementById("whatlayout").innerHTML="Set Layout";
-	}
-	else
-	{
-		LAYOUT = "set";
-
-		document.getElementById("whatlayout").innerHTML="Random Layout";
-	}
-
-	// Update the URL
-	pushNewUrl();
-
-	// Generate a new sheet
-	generateNewSheet();
 }
 
 function updateHidden()
@@ -563,7 +545,7 @@ function pushNewUrl()
 {
 	var hidden = HIDDEN ? "1" : "0";
 	var streamerMode = STREAMER_MODE ? "1" : "0";
-	window.history.pushState('', "Sheet", "?s=" + DIFFICULTY + "-" + hidden + "-" + streamerMode + "-" + VERSION.id + "_" + SEED);
+	window.history.pushState('', "Sheet", "?s=" + DIFFICULTY + "-" + hidden + "-" + streamerMode + "-" + VERSION.id + "-" + LICENCE + "-" + ASPECPTS + "_" + SEED);
 }
 
 function pushNewLocalSetting(name, value)
@@ -592,8 +574,6 @@ function getVersion(versionId)
 function updateVersion()
 {
 	$("#version_selection").val(VERSION.id);
-	$("#versions-toggle-button").html(VERSION.name);
-	$(".versionText").html(VERSION.name);
 	if (!VERSION.latest)
 	{
 		$("#version_notice").css("display", "block");
@@ -602,8 +582,18 @@ function updateVersion()
 	}
 	if (!VERSION.stable) {
 		$("#version_notice_unstable").css("display", "block");
+		$("#versions-toggle-button").html(VERSION.name+" (WIP)");
+		$(".versionText").html(VERSION.name+" (WIP)");
 	} else {
 		$("#version_notice_unstable").css("display", "none");
+		$("#versions-toggle-button").html(VERSION.name);
+		$(".versionText").html(VERSION.name);
+	}
+	if (VERSION.name.includes("Randomizer"))
+	{
+		$("#randomizer_specific").css("display", "block");
+	} else {
+		$("#randomizer_specific").css("display", "none");
 	}
 }
 

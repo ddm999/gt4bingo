@@ -9,7 +9,9 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 		<script src="generator_v1.js"></script>
-		<script src="goals_original_v1.js"></script>
+		<script src="events_orig.js"></script>
+		<script src="manufacturers_us.js"></script>
+		<script src="goals_us_v1.js"></script>
 		<script src="bingo.js"></script>
 
 		<meta property="og:title" content="Gran Turismo 4">
@@ -21,7 +23,16 @@
 	</head>
 	<body>
 		<section id="nav_section">
-			<h1>Gran Turismo 4</h1>
+			<h1>Gran Turismo 4 Bingo</h1>
+		</section>
+		<section id="warning">
+			<h2>Note: Extremely work-in-progress!</h2>
+			<ul>
+				<li>Impossible rows may be generated while the goals are figured out.</li>
+				<li>Only GT4 NTSC-U is currently supported.</li>
+				<li>The current goals list may have issues with the GT4 Randomizer: in the future, the Randomizer will have it's own goals list.</li>
+				<li></li>
+			</ul>
 		</section>
 		<section id="bingo-section">
 			<div id="bingo-box">
@@ -69,10 +80,12 @@
 							<input class="seed-input" id="seed_for_copying_hidden" type="text" value="12345" readonly="readonly"><br>
 							<button class="button" title="Copy Seed to Clipboard" onclick='copySeedToClipboard("seed_for_copying_hidden", event);'>Copy Seed</button>
 						</div>
-						<p>Use this seed to create a new world in Minecraft. Remember to adjust ingame settings such as difficulty if necessary.</p>
 						<p>If you've been linked this page for a race, you are not allowed to change the seed/goals. See the full rules below.</p>
 						<button class="button show-table-button" onclick='toggleHidden();event.preventDefault();'>Show Table</button>
-						<p>The table is currently hidden, you may show it when the Bingo starts (unless otherwise agreed upon by the players).</p>
+						<p>The table is currently hidden, you may show it when the Bingo starts (unless otherwise agreed upon by the players).</p><br>
+						<p id="randomizer_specific"><h2>Specific to GT4 Randomizer:</h2><br>
+						If you're playing with the same seed, make sure to set your username to the one you've been told to.<br><br>
+						If you're using different seeds, add the Bingo Seed listed above to the end of your username to ensure it's a new & random set of prize cars.</p>
 					</div>
 				</div>
 				<div id="options-menu" class="pause-menu">
@@ -100,7 +113,7 @@
 				</div>
 			</div>
 			<div id="info_bar">
-				Seed: <input class="seed-input" type="text" value="12345" oninput="changeSeed(value)" />&emsp;Difficulty: <span class="difficulty-text"></span>&emsp;Version: <span class="versionText"></span><br>
+				Seed: <input class="seed-input" type="text" value="12345" oninput="changeSeed(value)" />&emsp;Length: <span class="difficulty-text"></span>&emsp;Version: <span class="versionText"></span><br>
 			</div>
 			<div class="buttons-row">
 				<button onclick='newSeed(true);event.preventDefault();' class="button new-seed-button">Generate New Seed</button>
@@ -133,6 +146,8 @@
 			</ul>-->
 			<p><em>Tip:</em> You can click on the squares to change their colour which is useful for planning or to mark off completed goals. Use the colour slider in the Options menu to choose how many colours you want to use. You can also hover over the square and press (1-6) to select a colour or (0/q) to remove the colour! Distinct symbols on the squares for each colour can be toggled in the Options menu.</p>
 			<p><em>Tip:</em> Hover over a "?" to get more information about that goal.</p>
+			<p>You may want to enforce a minimum A-spec point requirement for event wins to count, to increase the challenge without affecting the duration.</p>
+
 			<!--<h3>Creating the World</h3>
 			<p>Create a new world in Minecraft and use <input class="seed-input" id="seed_for_copying_howto" type="text" value="" size="6" readonly="readonly" /><button class="button small-button" title="Copy Seed to Clipboard" onclick='copySeedToClipboard("seed_for_copying_howto", event);'>Copy</button> as the Seed (this is the same random seed used to generate this sheet). Load the world so that it can generate but don't move until you're ready. Pause the game to make sure time of day doesn't change or you get attacked. When you're ready, reveal the sheet if it's hidden and start playing!</p>-->
 			<h3>When using GT4 Randomizer</h3>
@@ -140,13 +155,14 @@
 
 			<h3>Playing with Others</h3>
 			<p>If you're racing together with other players, generate a Bingo sheet and then link it to them so that everyone has the same goals. You can hide the table in the Options menu before generating the seed so that everyone can reveal the sheet when you start. It's usually best to start the race on the "confirm your username" popup after pressing Enter on the on-screen keyboard.</p>
+			<p><em>Important:</em> Unless everyone agrees to allow it, don't cheat with the speedup function on your emulator!</p>
 
 			<h2>Other</h2>
 
 			<p>These rules (and goal descriptions) represent the recommended way to play Gran Turismo 4 Bingo, however if you play alone or everyone in the race agrees, then use whatever rules you want!</p>
 			<p>You can <a href="javascript:createGoalExport()">export the current sheet as JSON</a> for use in other tools such as <a href="https://bingosync.com/">Bingosync.</a></p>
 			<a href="https://github.com/ddm999/gt4bingo"><span class="github-logo"></span></a>
-			<p>Based on <a href="https://github.com/Joshimuz/mcbingo">Minecraft Bingo</a> by the incredible Joshimuz & other contributors!</p>
+			<h3>Based on <a href="https://github.com/Joshimuz/mcbingo">Minecraft Bingo</a> by the incredible Joshimuz & other contributors!</h3>
 		</section>
 		<div id="goalTooltip" class="tooltip">
 			<img src="" id="tooltipimg" />
