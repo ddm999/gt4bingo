@@ -11,6 +11,8 @@
 		<script src="generator_v1.js"></script>
 		<script src="courses_orig.js"></script>
 		<script src="events_orig.js"></script>
+		<script src="photolocations_orig.js"></script>
+		<script src="cars_us.js"></script>
 		<script src="manufacturers_us.js"></script>
 		<script src="goals_us_v1.js"></script>
 		<script src="bingo.js"></script>
@@ -33,9 +35,9 @@
 				<li>Only GT4 NTSC-U is currently supported.</li>
 				<li>The current goals list may have issues with the GT4 Randomizer: in the future, the Randomizer will have it's own goals list.</li>
 				<li>Some options are tweakable only via the URL and don't have controls (sliders) set up yet.</li>
-				<li>Some options don't have any text associated.</li>
-				<li>There's not many goals currently.</li>
-				<li>Generator balancing isn't very good yet (the best line can be very obvious).</li>
+				<li>Some options don't have any visible text associated to let you know what they even do.</li>
+				<li>There's not that many different types of goal currently.</li>
+				<li>Generator balancing isn't very good yet (the best line might be very obvious).</li>
 			</ul>
 		</section>
 		<section id="bingo-section">
@@ -117,12 +119,12 @@
 				</div>
 			</div>
 			<div id="info_bar">
-				Seed: <input class="seed-input" type="text" value="12345" oninput="changeSeed(value)" />&emsp;Length: <span class="difficulty-text"></span>&emsp;Version: <span class="versionText"></span><br>
+				Seed: <input class="seed-input" type="text" value="12345" oninput="changeSeed(value)" />&emsp;Length: <span class="detailed-difficulty-text"></span>&emsp;Version: <span class="versionText"></span><br>
 			</div>
 			<div class="buttons-row">
 				<button onclick='newSeed(true);event.preventDefault();' class="button new-seed-button">Generate New Seed</button>
 				<div class="slider-holder difficulty-slider-holder">
-					<input type="range" id="difficultyRange" value="3" max="5" min="1" class="slider" oninput="changeDifficulty(this.value);"/>
+					<input type="range" id="difficultyRange" value="2" max="6" min="1" class="slider" oninput="changeDifficulty(this.value);"/>
 					<p class="slider-text difficulty-text"></p>
 				</div>
 				<button class="button" id="options-toggle-button">Options...</button>
@@ -133,7 +135,7 @@
 		<section id="rules-section">
 			<h2>Version</h2>
 			<p>The various versions of the Bingo are designed for specific versions and mods of Gran Turismo 4 (original / Online / Randomizer / Spec II). Try to match versions whenever possible for the best experience.</p>
-			<p>To ensure that each created Bingo sheet always stays the same (even if goals are added or modified in the future) a version identifier is encoded into the URL.</p>
+			<p>To ensure that each created Bingo sheet always stays the same (even if goals are added or modified in the future) a version identifier is encoded into the URL. This is not the case for WIP / unstable versions.</p>
 			<p>Selected version: <select id="version_selection"></select></p>
 
 			<p id="version_notice">You are not using the latest stable version. This may be intended, for example if you want to look at a linked sheet. However, if you want to generate a new Bingo sheet, consider changing version.</p>
@@ -142,18 +144,10 @@
 			<h2>How to Play</h2>
 
 			<p>The objective is to get a "Bingo" as quickly as possible by completing the goals in five squares in a line horizontally, vertically or diagonally.</p>
-			<!--<ul>
-				<li><strong>Items:</strong> Goals written as just Item names (such as "Iron Block" or "Milk Bucket") require you to get that item and have it in your Inventory at the end of the game. If you lose the item by completing the Bingo by dying (e.g. "Kill yourself with an Ender Pearl" as the last goal) you do not need to recollect the item.</li>
-				<li><strong>Actions:</strong> If the goal describes an action (for example "Tame a Wolf"), the goal is completed once you Tame the Wolf. It doesn't matter what happens to the Wolf after.</li>
-				<li><strong>Builds:</strong> For goals which ask you to place something in the Minecraft world (like "Build a 2x2x2 leaf cube"), you must make sure that the build does not get destroyed for the duration of the Bingo. You don't have to show the build at the end, so if you didn't see it get destroyed it counts.</li>
-				<li><strong>Stats:</strong> Goals which list stats (such as "Crouch a distance of 50 meters") make use of the Statistics screen in the Minecraft pause menu. You need to ensure that stat shows the given amount (or greater). The Statistics screen often updates slowly, so leave some time between checking it when you're trying to complete a goal.</li>
-			</ul>-->
 			<p><em>Tip:</em> You can click on the squares to change their colour which is useful for planning or to mark off completed goals. Use the colour slider in the Options menu to choose how many colours you want to use. You can also hover over the square and press (1-6) to select a colour or (0/q) to remove the colour! Distinct symbols on the squares for each colour can be toggled in the Options menu.</p>
 			<p><em>Tip:</em> Hover over a "?" to get more information about that goal.</p>
 			<p>You may want to enforce a minimum A-spec point requirement for event wins to count, to increase the challenge without affecting the duration.</p>
 
-			<!--<h3>Creating the World</h3>
-			<p>Create a new world in Minecraft and use <input class="seed-input" id="seed_for_copying_howto" type="text" value="" size="6" readonly="readonly" /><button class="button small-button" title="Copy Seed to Clipboard" onclick='copySeedToClipboard("seed_for_copying_howto", event);'>Copy</button> as the Seed (this is the same random seed used to generate this sheet). Load the world so that it can generate but don't move until you're ready. Pause the game to make sure time of day doesn't change or you get attacked. When you're ready, reveal the sheet if it's hidden and start playing!</p>-->
 			<h3>When using GT4 Randomizer</h3>
 			<p>If you want everyone to get the same prize cars, ensure everyone enters the same username! Otherwise, you may want to ask players to add the Bingo Seed <input class="seed-input" id="seed_for_copying_howto" type="text" value="" size="6" readonly="readonly" /> to the end of their username, to ensure it's a random set of prize cars they've never seen before.</p>
 

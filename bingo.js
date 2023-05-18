@@ -6,7 +6,8 @@ var STREAMER_MODE;
 var VERSION;
 var LICENCE;
 var ASPECPTS;
-var DIFFICULTYTEXT = [ "Very Short", "Short", "Medium", "Long", "Very Long"];
+var DIFFICULTYTEXT = [ "Very Short", "Short", "Medium", "Long", "Very Long", "Extremely Long"];
+var DIFFICULTYESTIMATES = [ "20 mins", "1 hour", "2 hours", "3? hours", "4? hours", "6? hours"]
 var LICENCES = ["-", "B", "A", "IB", "IA", "S"];
 
 const DEFAULT_SQUARE_CLASS_NAME = "greysquare";
@@ -269,9 +270,9 @@ function getSettingsFromURL()
 	}
 
 	// Set default values
-	if (isNaN(DIFFICULTY) || DIFFICULTY < 1 || DIFFICULTY > 5)
+	if (isNaN(DIFFICULTY) || DIFFICULTY < 1 || DIFFICULTY > 6)
 	{
-		DIFFICULTY = 3;
+		DIFFICULTY = 2;
 	}
 
 	if (isNaN(LICENCE) || LICENCE < 0 || LICENCE > 6)
@@ -363,8 +364,8 @@ function generateNewSheet()
 		var goal = result[i];
 		var licence = goal.licence == undefined ? "-" : goal.licence;
 
-		//square.append(goal.generatedName + " " + goal.difficulty);
-		square.append(goal.generatedName);
+		square.append(goal.generatedName+" ["+goal.difficulty+"]");
+		//square.append(goal.generatedName);
 
 		square.attr(TOOLTIP_TEXT_ATTR_NAME, goal.tooltiptext || "");
 		square.attr(TOOLTIP_IMAGE_ATTR_NAME, goal.tooltipimg || "");
@@ -461,7 +462,10 @@ function updateStreamerMode()
 // TODO reduce code duplication between sliders
 function updateDifficulty()
 {
-	$(".difficulty-text").text(DIFFICULTYTEXT[DIFFICULTY - 1]);
+	var difftext = DIFFICULTYTEXT[DIFFICULTY-1];
+	var diffest = DIFFICULTYESTIMATES[DIFFICULTY-1];
+	$(".difficulty-text").text(difftext);
+	$(".detailed-difficulty-text").text(difftext+" ("+diffest+" expected)");
 	$("#difficultyRange").val(DIFFICULTY);
 }
 
@@ -589,12 +593,12 @@ function updateVersion()
 		$("#versions-toggle-button").html(VERSION.name);
 		$(".versionText").html(VERSION.name);
 	}
-	if (VERSION.name.includes("Randomizer"))
+	/*if (VERSION.name.includes("Randomizer"))
 	{
 		$("#randomizer_specific").css("display", "block");
 	} else {
 		$("#randomizer_specific").css("display", "none");
-	}
+	}*/
 }
 
 function changeVersion(versionId)

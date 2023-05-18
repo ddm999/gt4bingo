@@ -3,7 +3,7 @@
 var generator_v1 = function(maxLicence, difficulty, bingoList, aspecpts)
 {
 	if (maxLicence == 6)
-		maxLicence = difficulty;
+		maxLicence = difficulty-1;
 
 	var amountOfExtremelyLong;
 	var amountOfVeryLong;
@@ -20,46 +20,55 @@ var generator_v1 = function(maxLicence, difficulty, bingoList, aspecpts)
 					0, 0, 0, 0, 0,
 					0, 0, 0, 0, 0];
 
+	console.log("difficulty:"+difficulty)
 	switch(difficulty)
 	{
 		case 2:
 			amountOfExtremelyLong = 0;
 			amountOfVeryLong = 0;
 			amountOfLong = 0;
-			amountOfMedium = getRandomInt(4, 9);
-			amountOfShort = 25 - (amountOfMedium + getRandomInt(4, 9));
+			amountOfMedium = 0;
+			amountOfShort = getRandomInt(10, 14);
 			break;
 
 		case 3:
 			amountOfExtremelyLong = 0;
 			amountOfVeryLong = 0;
-			amountOfLong = getRandomInt(2, 6);
-			amountOfShort = getRandomInt(3, 9);
-			amountOfMedium = 25 - (amountOfVeryLong + amountOfLong + amountOfShort + getRandomInt(1, 4));
+			amountOfLong = 0;
+			amountOfMedium = getRandomInt(10, 14);
+			amountOfShort = 25 - (amountOfMedium + getRandomInt(3, 6));
 			break;
 
 		case 4:
 			amountOfExtremelyLong = 0;
-			amountOfVeryLong = getRandomInt(1, 3);
+			amountOfVeryLong = 0;
 			amountOfLong = getRandomInt(10, 14);
-			amountOfShort = getRandomInt(2, 6);
-			amountOfMedium = 25 - (amountOfVeryLong + amountOfLong + amountOfShort);
+			amountOfShort = getRandomInt(3, 6);
+			amountOfMedium = 25 - (amountOfVeryLong + amountOfLong + amountOfShort + getRandomInt(2, 4));
 			break;
 
 		case 5:
-			amountOfExtremelyLong = getRandomInt(3, 6);
+			amountOfExtremelyLong = 0;
+			amountOfVeryLong = getRandomInt(6, 10);
+			amountOfLong = getRandomInt(6, 10);
+			amountOfShort = getRandomInt(2, 4);
+			amountOfMedium = 25 - (amountOfVeryLong + amountOfLong + amountOfShort);
+			break;
+
+		case 6:
+			amountOfExtremelyLong = getRandomInt(4, 8);
 			amountOfVeryLong = getRandomInt(4, 12);
 			amountOfMedium = getRandomInt(2, 6);
 			amountOfLong = 25 - (amountOfExtremelyLong + amountOfVeryLong + amountOfMedium);
 			amountOfShort = 0;
 			break;
-
+		
 		default:
 			amountOfExtremelyLong = 0;
 			amountOfVeryLong = 0;
 			amountOfLong = 0;
 			amountOfMedium = 0;
-			amountOfShort = getRandomInt(5, 14);
+			amountOfShort = 0;
 	}
 
 	function distributeDifficulty(amountOfDifficulty, difficulty)
@@ -302,6 +311,7 @@ var generator_v1 = function(maxLicence, difficulty, bingoList, aspecpts)
 			}
 			return "";
 		});
+		goal.difficulty = sheetLayout[i];
 
 		// Add the sheet to the goal
 		currentSheet[indexes[i]] = goal;
