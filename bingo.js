@@ -364,8 +364,8 @@ function generateNewSheet()
 		var goal = result[i];
 		var licence = goal.licence == undefined ? "-" : goal.licence;
 
-		square.append(goal.generatedName+" ["+goal.difficulty+"]");
-		//square.append(goal.generatedName);
+		//square.append(goal.generatedName+" ["+goal.difficulty+"]");
+		square.append(goal.generatedName);
 
 		square.attr(TOOLTIP_TEXT_ATTR_NAME, goal.tooltiptext || "");
 		square.attr(TOOLTIP_IMAGE_ATTR_NAME, goal.tooltipimg || "");
