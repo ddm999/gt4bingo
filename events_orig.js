@@ -102,13 +102,14 @@ var Events_Orig = {
 	],
 	"ia": [
 		"Supercar Festival",
-		"Gran Turismo World Championship",
 		"British GT Series",
 		"Deutsche Touring Car Meisterschaft",
 		"All Japan GT Championship",
 		"Race of the Red \"R\" Emblem",
 	],
 	"extreme": [
+		// GTWC has basically the same requirements as extreme hall, so
+		"Gran Turismo World Championship",
 		"Gran Turismo All Stars",
 		"World Circuit Tour",
 		"Premium Sports Lounge",

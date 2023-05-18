@@ -308,6 +308,14 @@ body {
 	top: 5px;
 }
 
+.licence {
+	width: 19px;
+	height: 12px;
+	position: absolute;
+	left: 8px;
+	bottom: 5px;
+}
+
 #bingo td[data-tooltiptext=""] .tooltipQ {
 	display: none;
 }
@@ -648,6 +656,11 @@ body.streamer-mode {
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+p#version_notice_unstable {
+	font-style: italic;
+	color: var(--red-square-hover);
 }
 
 /* End Rules And Bottom */

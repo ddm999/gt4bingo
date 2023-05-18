@@ -2,6 +2,9 @@
 
 var generator_v1 = function(maxLicence, difficulty, bingoList, aspecpts)
 {
+	if (maxLicence == 6)
+		maxLicence = difficulty;
+
 	var amountOfExtremelyLong;
 	var amountOfVeryLong;
 	var amountOfLong;
@@ -44,7 +47,7 @@ var generator_v1 = function(maxLicence, difficulty, bingoList, aspecpts)
 			break;
 
 		case 5:
-			amountOfExtremelyLong = getRandomInt(1, 3);
+			amountOfExtremelyLong = getRandomInt(3, 6);
 			amountOfVeryLong = getRandomInt(4, 12);
 			amountOfMedium = getRandomInt(2, 6);
 			amountOfLong = 25 - (amountOfExtremelyLong + amountOfVeryLong + amountOfMedium);

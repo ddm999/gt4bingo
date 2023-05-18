@@ -50,7 +50,6 @@ const SQUARE_COUNT = 25;
 const NODE_TYPE_TEXT = 3;
 const TOOLTIP_TEXT_ATTR_NAME = "data-tooltiptext";
 const TOOLTIP_IMAGE_ATTR_NAME = "data-tooltipimg";
-const LICENCE_IMAGE_ATTR_NAME = "data-licenceimg";
 const COLOUR_COUNT_SETTING_NAME = "bingoColourCount";
 const COLOUR_SYMBOLS_SETTING_NAME = "bingoColourSymbols";
 const COLOUR_THEME_SETTING_NAME = "bingoColourTheme";
@@ -110,7 +109,7 @@ $(document).ready(function()
 
 	const goalTooltip = $("#goalTooltip");
 	// On hovering a goal square
-	$("#bingo td img").hover(function()
+	$("#bingo td .tooltipQ").hover(function()
 	{
 		goalTooltip.show();
 	},function()
@@ -275,9 +274,9 @@ function getSettingsFromURL()
 		DIFFICULTY = 3;
 	}
 
-	if (isNaN(LICENCE) || LICENCE < 0 || LICENCE > 5)
+	if (isNaN(LICENCE) || LICENCE < 0 || LICENCE > 6)
 	{
-		LICENCE = 2;
+		LICENCE = 6;
 	}
 
 	if (isNaN(ASPECPTS) || ASPECPTS < 0 || ASPECPTS > 200)
@@ -362,13 +361,14 @@ function generateNewSheet()
 
 	forEachSquare((i, square) => {
 		var goal = result[i];
+		var licence = goal.licence == undefined ? "-" : goal.licence;
 
 		//square.append(goal.generatedName + " " + goal.difficulty);
 		square.append(goal.generatedName);
 
 		square.attr(TOOLTIP_TEXT_ATTR_NAME, goal.tooltiptext || "");
 		square.attr(TOOLTIP_IMAGE_ATTR_NAME, goal.tooltipimg || "");
-		square.attr(LICENCE_IMAGE_ATTR_NAME, goal.licence || "-");
+		$("#slot"+(i+1)+" .licence").attr("src", "Licences/"+licence+".png");
 
 		if (goal.tags && goal.tags.findIndex(t => t.name == "Never") != -1)
 		{
