@@ -29,7 +29,7 @@ var Courses_Orig = [
     {name: "Fuji Speedway 80's", weeks: 6, reverse: false, maxcars: 6},
     {name: "Special Stage Route 5", weeks: 8, reverse: true, maxcars: 6},
     {name: "Suzuka Circuit Full", weeks: 10, reverse: false, maxcars: 6},
-    {name: "Twin Ring Motegi East Short", weeks: 12, maxcars: 6},
+    {name: "Twin Ring Motegi East Short", weeks: 12, reverse: false, maxcars: 6},
     {name: "Grand Valley Speedway", weeks: 14, reverse: true, maxcars: 6},
     {name: "Hong Kong", weeks: 16, reverse: true, maxcars: 6},
     {name: "Suzuka Circuit West", weeks: 18, reverse: false, maxcars: 6},
