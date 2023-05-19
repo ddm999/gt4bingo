@@ -27,7 +27,7 @@ var generator_v1 = function(maxLicence, difficulty, bingoList, aspecpts)
 			amountOfExtremelyLong = 0;
 			amountOfVeryLong = 0;
 			amountOfLong = 0;
-			amountOfMedium = 0;
+			amountOfMedium = getRandomInt(2, 4);
 			amountOfShort = getRandomInt(10, 14);
 			break;
 
