@@ -42,10 +42,11 @@ var hoveredSquare;
 // The name is used for display purposes only.
 var VERSIONS = [
 	{ id:"1", name:"GT4 NTSC-U",		goals: bingoList_us_v1, generator: generator_v1, stable: false, latest: true },
+	{ id:"2", name:"GT4 Randomizer",	goals: bingoList_rando_v1, generator: generator_v1, stable: false, latest: true },
 ];
 
 // This is the newest stable version that users not specifying a version will get
-var LATEST_VERSION = "1";
+var LATEST_VERSION = "2";
 
 const SQUARE_COUNT = 25;
 const NODE_TYPE_TEXT = 3;
